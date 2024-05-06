@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom'
 const Job = ({ data }) => {
   const dispatch = useDispatch()
   const favourites = useSelector((state) => state.favouriteJob.content)
+  const isFavourite = favourites.findIndex((fav) => fav._id === data._id) !== -1
 
   return (
     <Row
       className={
-        favourites.includes(data)
+        isFavourite
           ? 'mx-0 mt-3 p-3 border border-primary rounded'
           : 'mx-0 mt-3 p-3 border border-secondary-subtle rounded'
       }
@@ -24,9 +25,9 @@ const Job = ({ data }) => {
       </Col>
       <Col xs={1}>
         <i
-          className={favourites.includes(data) ? 'bi bi-star-fill me-2 colorSelected' : 'bi bi-star-fill me-2'}
+          className={isFavourite ? 'bi bi-star-fill me-2 colorSelected' : 'bi bi-star-fill me-2'}
           onClick={(e) => {
-            if (!favourites.includes(data)) {
+            if (!isFavourite) {
               dispatch({ type: 'ADD_FAVOURITE_JOB', payload: data })
             } else {
               dispatch({ type: 'REMOVE_FAVOURITE_JOB', payload: data._id })
