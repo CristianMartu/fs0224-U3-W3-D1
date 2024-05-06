@@ -21,6 +21,15 @@ const mainReducer = (state = initialState, action) => {
         },
       }
 
+    case 'REMOVE_FAVOURITE_JOB':
+      return {
+        ...state,
+        favouriteJob: {
+          ...state.favouriteJob,
+          content: state.favouriteJob.content.filter((data) => data._id !== action.payload),
+        },
+      }
+
     default:
       return state
   }
